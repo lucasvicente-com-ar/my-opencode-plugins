@@ -1,16 +1,17 @@
-// Credits: Lucas M. Vicente
-
 import { type Plugin } from "@opencode-ai/plugin"
+import { appendFileSync, mkdirSync } from "fs"
+import { join } from "path"
+import { homedir } from "os"
 
-export const ConsoleLoggerPlugin: Plugin = async ({ $ }) => {
-  const logDir = `${$HOME}/opencode-logs`
-  await $`mkdir -p "${logDir}"`
+export const ConsoleLoggerPlugin: Plugin = async () => {
+  const logDir = join(homedir(), "opencode-logs")
+  mkdirSync(logDir, { recursive: true })
 
   const sessionId = new Date().toISOString().replace(/[:.]/g, "-")
-  const sessionFile = `${logDir}/session_${sessionId}.log`
+  const sessionFile = join(logDir, `session_${sessionId}.log`)
   let cmdCount = 0
 
-  await $`echo "=== SESSION START: ${new Date().toISOString()} ===" > "${sessionFile}"`
+  appendFileSync(sessionFile, `=== SESSION START: ${new Date().toISOString()} ===\n`)
 
   return {
     "tool.execute.after": async (input, output) => {
@@ -20,10 +21,15 @@ export const ConsoleLoggerPlugin: Plugin = async ({ $ }) => {
         const command = output.args.command
         const result = output.result
 
-        await $`echo "[${cmdCount}] ${ts}" >> "${sessionFile}"`
-        await $`echo "> ${command}" >> "${sessionFile}"`
-        await $`echo "${result}" >> "${sessionFile}"`
-        await $`echo "---" >> "${sessionFile}"`
+        const logEntry = [
+          `[${cmdCount}] ${ts}`,
+          `> ${command}`,
+          `${result}`,
+          "---",
+          "",
+        ].join("\n")
+
+        appendFileSync(sessionFile, logEntry)
       }
     },
   }

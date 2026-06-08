@@ -1,4 +1,6 @@
 import { type Plugin, tool } from "@opencode-ai/plugin"
+import { mkdirSync, writeFileSync } from "fs"
+import { join } from "path"
 
 export const WebNavPlugin: Plugin = async ({ $, directory }) => {
   let history: string[] = []
@@ -35,15 +37,21 @@ export const WebNavPlugin: Plugin = async ({ $, directory }) => {
           if (action === "fetch") {
             if (!url) return "Error: se requiere url"
             history.push(url)
-            const content = await $`curl -sL "${url}"`.text()
-            const lines = content.split("\n").length
-            return lines > 200
-              ? `Contenido de ${url} (${content.length} chars, ${lines} líneas):\n\n${content.slice(0, 5000)}\n\n... (truncado, usá action=fetch sin preview para completo)`
-              : content
+            try {
+              const res = await fetch(url)
+              const content = await res.text()
+              const lines = content.split("\n").length
+              return lines > 200
+                ? `Contenido de ${url} (${content.length} chars, ${lines} líneas):\n\n${content.slice(0, 5000)}\n\n... (truncado, usá action=fetch sin preview para completo)`
+                : content
+            } catch (err: unknown) {
+              const msg = err instanceof Error ? err.message : String(err)
+              return `Error al obtener ${url}: ${msg}`
+            }
           }
 
           if (action === "dashboard") {
-            const htmlFile = `${directory}/.opencode/web-dashboard.html`
+            const htmlFile = join(directory, ".opencode", "web-dashboard.html")
             const links = history.length > 0
               ? history.map((u, i) => `<li><a href="${u}" target="_blank">${i + 1}. ${u}</a></li>`).join("\n")
               : "<li style='color:#8b949e'>Todavía no visitaste ninguna URL</li>"
@@ -106,7 +114,8 @@ function openUrl() {
 </script>
 </body></html>`
 
-            await $`mkdir -p "${directory}/.opencode" && echo "${html}" > "${htmlFile}"`
+            mkdirSync(join(directory, ".opencode"), { recursive: true })
+            writeFileSync(htmlFile, html, "utf-8")
 
             if (process.platform === "win32") {
               await $`start "" "${htmlFile}"`

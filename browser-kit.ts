@@ -13,29 +13,36 @@ export const BrowserKitPlugin: Plugin = async ({ $, directory }) => {
         },
         async execute(args) {
           switch (args.action) {
-            case "fetch": {
-              if (!args.url) return "Error: se requiere argumento 'url'"
-              const res = await $`curl -sL "${args.url}"`.text()
-              return res
-            }
+            case "fetch":
             case "source": {
               if (!args.url) return "Error: se requiere argumento 'url'"
-              const html = await $`curl -sL "${args.url}"`.text()
-              return html
+              try {
+                const res = await fetch(args.url)
+                const text = await res.text()
+                return text
+              } catch (err: unknown) {
+                const msg = err instanceof Error ? err.message : String(err)
+                return `Error al obtener ${args.url}: ${msg}`
+              }
             }
             case "search": {
               if (!args.query) return "Error: se requiere argumento 'query'"
-              const encoded = encodeURIComponent(args.query)
-              const html = await $`curl -sL "https://html.duckduckgo.com/html/?q=${encoded}"`.text()
-              // Extraer resultados
-              const results = html.match(/<a[^>]+class="result__a"[^>]*>[\s\S]*?<\/a>/gi)
-              if (!results || results.length === 0) return "Sin resultados"
-              const links = results.slice(0, 10).map((a: string) => {
-                const title = a.replace(/<[^>]*>/g, "").trim()
-                const href = a.match(/href="([^"]+)"/)?.[1] || ""
-                return `${title}\n  ${href}`
-              }).join("\n\n")
-              return `Resultados para "${args.query}":\n\n${links}`
+              try {
+                const encoded = encodeURIComponent(args.query)
+                const res = await fetch(`https://html.duckduckgo.com/html/?q=${encoded}`)
+                const html = await res.text()
+                const results = html.match(/<a[^>]+class="result__a"[^>]*>[\s\S]*?<\/a>/gi)
+                if (!results || results.length === 0) return "Sin resultados"
+                const links = results.slice(0, 10).map((a: string) => {
+                  const title = a.replace(/<[^>]*>/g, "").trim()
+                  const href = a.match(/href="([^"]+)"/)?.[1] || ""
+                  return `${title}\n  ${href}`
+                }).join("\n\n")
+                return `Resultados para "${args.query}":\n\n${links}`
+              } catch (err: unknown) {
+                const msg = err instanceof Error ? err.message : String(err)
+                return `Error en la búsqueda: ${msg}`
+              }
             }
             case "preview": {
               if (!args.file) return "Error: se requiere argumento 'file'"

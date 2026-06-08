@@ -1,6 +1,8 @@
 import { type Plugin, tool } from "@opencode-ai/plugin"
+import { readFileSync, mkdirSync, writeFileSync } from "fs"
+import { join } from "path"
 
-export const SessionViewerPlugin: Plugin = async ({ $, directory, worktree }) => {
+export const SessionViewerPlugin: Plugin = async ({ $, directory }) => {
   const files: string[] = []
   let counter = 0
 
@@ -17,9 +19,9 @@ export const SessionViewerPlugin: Plugin = async ({ $, directory, worktree }) =>
         args: {},
         async execute() {
           counter++
-          const outputDir = `${directory}/.opencode/session-views`
-          await $`mkdir -p "${outputDir}"`
-          const htmlFile = `${outputDir}/session-${counter}.html`
+          const outputDir = join(directory, ".opencode", "session-views")
+          mkdirSync(outputDir, { recursive: true })
+          const htmlFile = join(outputDir, `session-${counter}.html`)
 
           let html = `<!DOCTYPE html><html lang="es"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -51,7 +53,7 @@ pre code.hljs{padding:1rem;font-size:.8rem;line-height:1.5;overflow-x:auto}
             html += `<div class="empty">No se modificaron archivos en esta sesión.</div>`
           } else {
             for (const fp of files) {
-              const content = await $`cat "${fp}"`.text()
+              const content = readFileSync(fp, "utf-8")
               const ext = fp.split(".").pop() || ""
               html += `<div class="file-card">
 <div class="file-header"><span class="file-name">${fp}</span></div>
@@ -61,7 +63,7 @@ pre code.hljs{padding:1rem;font-size:.8rem;line-height:1.5;overflow-x:auto}
 
           html += `</body></html>`
 
-          await $`echo "${html}" > "${htmlFile}"`
+          writeFileSync(htmlFile, html, "utf-8")
 
           if (process.platform === "win32") {
             await $`start "" "${htmlFile}"`

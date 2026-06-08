@@ -1,5 +1,3 @@
-// Credits: Lucas M. Vicente
-
 const MAX_LINES = 100
 const HEAD_TAIL = 40
 

@@ -1,6 +1,6 @@
 {
   "name": "my-opencode-plugins",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Plugins para opencode - log-prefix, console-logger, command-guard, token-saver, session-viewer, browser-kit y web-nav",
   "author": "Lucas M. Vicente",
   "repository": "https://github.com/lucasvicente-com-ar/my-opencode-plugins",
