@@ -1,6 +1,6 @@
 # my-opencode-plugins
 
-**v0.8.0** — Plugins para [opencode](https://opencode.ai).
+**v0.9.0** — Plugins para [opencode](https://opencode.ai).
 
 Colección de plugins para mejorar la experiencia de uso de opencode, con foco en seguridad, visibilidad y trazabilidad de los comandos ejecutados.
 
@@ -168,6 +168,38 @@ browser action=source url="https://github.com"
 
 ---
 
+### web-nav
+
+Panel de navegación web con dashboard visual y control desde opencode.
+
+**Tool:** `web-nav` (herramienta personalizada)  
+**Export:** `WebNavPlugin`
+
+**Acciones disponibles:**
+
+| Acción | Descripción |
+|--------|-------------|
+| `goto` | Abre una URL en el browser predeterminado |
+| `fetch` | Descarga el contenido de una URL y lo devuelve en el chat |
+| `dashboard` | Abre un dashboard HTML en el browser con historial y navegación visual |
+| `history` | Muestra el historial de URLs visitadas en la sesión |
+
+**Ejemplos:**
+```
+web-nav action=goto url="https://github.com"
+web-nav action=fetch url="https://ejemplo.com"
+web-nav action=dashboard
+web-nav action=history
+```
+
+**Dashboard:** Al ejecutar `web-nav action=dashboard` se genera una página interactiva con:
+- Barra de URL para navegar
+- Historial de URLs visitadas en la sesión
+- Accesos directos a sitios comunes
+- Referencia de comandos para usar desde opencode
+
+---
+
 ## Instalación
 
 ### Local (recomendado)
@@ -242,6 +274,7 @@ export const MiPlugin = async ({ project, client, $, directory, worktree }) => {
 | 0.6.0   | nuevo plugin: token-saver |
 | 0.7.0   | nuevo plugin: session-viewer |
 | 0.8.0   | nuevo plugin: browser-kit |
+| 0.9.0   | nuevo plugin: web-nav (dashboard visual de navegación) |
 
 ---
 

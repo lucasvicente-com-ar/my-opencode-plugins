@@ -1,7 +1,7 @@
 {
   "name": "my-opencode-plugins",
-  "version": "0.8.0",
-  "description": "Plugins para opencode - log-prefix, console-logger, command-guard, token-saver, session-viewer y browser-kit",
+  "version": "0.9.0",
+  "description": "Plugins para opencode - log-prefix, console-logger, command-guard, token-saver, session-viewer, browser-kit y web-nav",
   "author": "Lucas M. Vicente",
   "repository": "https://github.com/lucasvicente-com-ar/my-opencode-plugins",
   "opencode": {
@@ -42,6 +42,12 @@
       "name": "browser-kit",
       "description": "Herramienta unificada para interactuar con la web (fetch, search, preview)",
       "file": "browser-kit.ts",
+      "hook": "custom tool"
+    },
+    {
+      "name": "web-nav",
+      "description": "Panel de navegación web con dashboard visual, fetch, goto e historial",
+      "file": "web-nav.ts",
       "hook": "custom tool"
     }
   ]
