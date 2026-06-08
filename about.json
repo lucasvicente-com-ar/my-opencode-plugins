@@ -1,0 +1,22 @@
+{
+  "name": "my-opencode-plugins",
+  "version": "0.1.0",
+  "description": "Plugins para opencode - log-prefix y console-logger",
+  "author": "Lucas M. Vicente",
+  "repository": "https://github.com/lucasvicente-com-ar/my-opencode-plugins",
+  "opencode": {
+    "minVersion": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "log-prefix",
+      "description": "Agrega prefijo [OPENCODE] a cada comando bash",
+      "file": "log-prefix.js"
+    },
+    {
+      "name": "console-logger",
+      "description": "Guarda logs de cada comando bash ejecutado",
+      "file": "console-logger.ts"
+    }
+  ]
+}
