@@ -1,7 +1,7 @@
 {
   "name": "my-opencode-plugins",
-  "version": "0.5.0",
-  "description": "Plugins para opencode - log-prefix, console-logger y command-guard",
+  "version": "0.6.0",
+  "description": "Plugins para opencode - log-prefix, console-logger, command-guard y token-saver",
   "author": "Lucas M. Vicente",
   "repository": "https://github.com/lucasvicente-com-ar/my-opencode-plugins",
   "opencode": {
@@ -25,6 +25,12 @@
       "description": "Bloquea comandos peligrosos antes de ejecutarse",
       "file": "command-guard.js",
       "hook": "tool.execute.before"
+    },
+    {
+      "name": "token-saver",
+      "description": "Trunca salidas largas de comandos bash para ahorrar tokens",
+      "file": "token-saver.js",
+      "hook": "tool.execute.after"
     }
   ]
 }

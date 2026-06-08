@@ -1,6 +1,6 @@
 # my-opencode-plugins
 
-**v0.5.0** — Plugins para [opencode](https://opencode.ai).
+**v0.6.0** — Plugins para [opencode](https://opencode.ai).
 
 Colección de plugins para mejorar la experiencia de uso de opencode, con foco en seguridad, visibilidad y trazabilidad de los comandos ejecutados.
 
@@ -81,6 +81,30 @@ Bloquea comandos potencialmente destructivos antes de que se ejecuten, lanzando 
 
 ---
 
+### token-saver
+
+Reduce el consumo de tokens truncando automáticamente la salida de comandos `bash` que son muy largos.
+
+**Hook:** `tool.execute.after`  
+**Export:** `TokenSaverPlugin`
+
+**Comportamiento:** Si la salida del comando supera las 100 líneas, conserva las primeras 40 y las últimas 40, y reemplaza el resto con un resumen indicando cuántas líneas se truncaron.
+
+**Ejemplo:**
+```
+línea 1
+línea 2
+...
+línea 40
+... (250 líneas truncadas para ahorrar tokens)
+línea 291
+línea 292
+```
+
+**Útil para:** `dir` / `ls -la` en directorios grandes, logs extensos, salidas de compilación, etc.
+
+---
+
 ## Instalación
 
 ### Local (recomendado)
@@ -152,6 +176,7 @@ export const MiPlugin = async ({ project, client, $, directory, worktree }) => {
 | 0.3.0   | console-logger: logs agrupados por sesión |
 | 0.4.0   | nuevo plugin: command-guard |
 | 0.5.0   | documentación completa en README |
+| 0.6.0   | nuevo plugin: token-saver |
 
 ---
 
