@@ -7,7 +7,8 @@ export const LogPrefixPlugin = async ({ $, directory }) => {
     "tool.execute.before": async (input, output) => {
       if (input.tool === "bash") {
         const cmd = output.args.command;
-        output.args.command = `echo "[OPENCODE] Ejecutando:"; ${cmd}";
+        const ts = new Date().toLocaleTimeString();
+        output.args.command = `echo "[OPENCODE ${ts}] Ejecutando:"; ${cmd}`;
       }
     },
   };

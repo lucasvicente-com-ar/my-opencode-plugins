@@ -1,12 +1,12 @@
 # my-opencode-plugins
 
-**v0.1.0** — Plugins para [opencode](https://opencode.ai).
+**v0.2.0** — Plugins para [opencode](https://opencode.ai).
 
 ## Plugins
 
 | Módulo | Archivo | Descripción |
 |--------|---------|-------------|
-| `log-prefix` | `log-prefix.js` | Intercepta cada comando `bash` y le antepone el prefijo `[OPENCODE] Ejecutando:` para visualizar claramente qué se está ejecutando. |
+| `log-prefix` | `log-prefix.js` | Intercepta cada comando `bash` y le antepone el prefijo `[OPENCODE HH:MM:SS] Ejecutando:` con timestamp para visualizar claramente qué se ejecuta y cuándo. |
 | `console-logger` | `console-logger.ts` | Escucha la ejecución de comandos `bash` y guarda automáticamente cada comando junto con su salida en archivos de log individuales con timestamp. Los logs se almacenan en `~/opencode-logs/`. |
 
 ## Versiones
@@ -14,6 +14,7 @@
 | Versión | Cambios |
 |---------|---------|
 | 0.1.0   | Versión inicial: log-prefix + console-logger |
+| 0.2.0   | log-prefix: agrega timestamp al prefijo |
 
 ## Uso
 
