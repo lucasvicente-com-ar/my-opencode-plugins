@@ -1,7 +1,7 @@
 {
   "name": "my-opencode-plugins",
-  "version": "0.6.0",
-  "description": "Plugins para opencode - log-prefix, console-logger, command-guard y token-saver",
+  "version": "0.7.0",
+  "description": "Plugins para opencode - log-prefix, console-logger, command-guard, token-saver y session-viewer",
   "author": "Lucas M. Vicente",
   "repository": "https://github.com/lucasvicente-com-ar/my-opencode-plugins",
   "opencode": {
@@ -31,6 +31,12 @@
       "description": "Trunca salidas largas de comandos bash para ahorrar tokens",
       "file": "token-saver.js",
       "hook": "tool.execute.after"
+    },
+    {
+      "name": "session-viewer",
+      "description": "Abre en el browser una vista HTML con los archivos modificados en la sesion",
+      "file": "session-viewer.ts",
+      "hook": "tool.execute.after + custom tool"
     }
   ]
 }

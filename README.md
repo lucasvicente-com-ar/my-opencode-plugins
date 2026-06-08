@@ -1,6 +1,6 @@
 # my-opencode-plugins
 
-**v0.6.0** — Plugins para [opencode](https://opencode.ai).
+**v0.7.0** — Plugins para [opencode](https://opencode.ai).
 
 Colección de plugins para mejorar la experiencia de uso de opencode, con foco en seguridad, visibilidad y trazabilidad de los comandos ejecutados.
 
@@ -105,6 +105,41 @@ línea 292
 
 ---
 
+### session-viewer
+
+Genera una vista HTML con todos los archivos modificados durante la sesión y la abre automáticamente en el browser.
+
+**Hook:** `tool.execute.after` (`write`, `edit`)  
+**Tool:** `session-viewer` (herramienta personalizada)  
+**Export:** `SessionViewerPlugin`
+
+**Cómo se usa:**
+1. Durante la sesión, editas archivos normalmente
+2. Cuando querés revisar todo, ejecutás:
+   ```
+   session-viewer
+   ```
+3. Se abre una página en el browser con:
+   - Resumen: cantidad de archivos modificados
+   - Lista de archivos con código syntax-highlighted
+   - Vista numerada por llamada
+
+**Ejemplo del HTML generado:**
+```
+┌─────────────────────────────────────┐
+│  Session Viewer                     │
+│  Archivos: 3    Vista: #1           │
+├─────────────────────────────────────┤
+│  src/index.ts (con highlight.js)    │
+│  src/utils.ts                       │
+│  src/styles.css                     │
+└─────────────────────────────────────┘
+```
+
+**Nota:** La vista es estática (código final, no diff). Si necesitás diffs, usá `git diff`.
+
+---
+
 ## Instalación
 
 ### Local (recomendado)
@@ -177,6 +212,7 @@ export const MiPlugin = async ({ project, client, $, directory, worktree }) => {
 | 0.4.0   | nuevo plugin: command-guard |
 | 0.5.0   | documentación completa en README |
 | 0.6.0   | nuevo plugin: token-saver |
+| 0.7.0   | nuevo plugin: session-viewer |
 
 ---
 
