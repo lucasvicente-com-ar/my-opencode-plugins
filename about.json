@@ -1,7 +1,7 @@
 {
   "name": "my-opencode-plugins",
-  "version": "0.7.0",
-  "description": "Plugins para opencode - log-prefix, console-logger, command-guard, token-saver y session-viewer",
+  "version": "0.8.0",
+  "description": "Plugins para opencode - log-prefix, console-logger, command-guard, token-saver, session-viewer y browser-kit",
   "author": "Lucas M. Vicente",
   "repository": "https://github.com/lucasvicente-com-ar/my-opencode-plugins",
   "opencode": {
@@ -37,6 +37,12 @@
       "description": "Abre en el browser una vista HTML con los archivos modificados en la sesion",
       "file": "session-viewer.ts",
       "hook": "tool.execute.after + custom tool"
+    },
+    {
+      "name": "browser-kit",
+      "description": "Herramienta unificada para interactuar con la web (fetch, search, preview)",
+      "file": "browser-kit.ts",
+      "hook": "custom tool"
     }
   ]
 }

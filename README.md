@@ -1,6 +1,6 @@
 # my-opencode-plugins
 
-**v0.7.0** — Plugins para [opencode](https://opencode.ai).
+**v0.8.0** — Plugins para [opencode](https://opencode.ai).
 
 Colección de plugins para mejorar la experiencia de uso de opencode, con foco en seguridad, visibilidad y trazabilidad de los comandos ejecutados.
 
@@ -140,6 +140,34 @@ Genera una vista HTML con todos los archivos modificados durante la sesión y la
 
 ---
 
+### browser-kit
+
+Herramienta unificada para interactuar con la web y el browser desde opencode.
+
+**Tool:** `browser` (herramienta personalizada)  
+**Export:** `BrowserKitPlugin`
+
+**Acciones disponibles:**
+
+| Acción | Descripción | Argumentos |
+|--------|-------------|------------|
+| `fetch` | Descarga el contenido de una URL y lo devuelve como texto | `url` |
+| `source` | Obtiene el HTML fuente de una página | `url` |
+| `search` | Busca en la web usando DuckDuckGo y devuelve los primeros resultados | `query` |
+| `preview` | Abre un archivo HTML local en el browser predeterminado | `file` |
+
+**Ejemplos de uso:**
+```
+browser action=fetch url="https://ejemplo.com"
+browser action=search query="open code plugins"
+browser action=preview file="src/index.html"
+browser action=source url="https://github.com"
+```
+
+**Nota:** `fetch` y `source` son equivalentes (ambos devuelven el contenido). `fetch` es útil para obtener texto plano, `source` para ver el HTML crudo. La diferenciación es semántica para que el LLM entienda mejor el contexto.
+
+---
+
 ## Instalación
 
 ### Local (recomendado)
@@ -213,6 +241,7 @@ export const MiPlugin = async ({ project, client, $, directory, worktree }) => {
 | 0.5.0   | documentación completa en README |
 | 0.6.0   | nuevo plugin: token-saver |
 | 0.7.0   | nuevo plugin: session-viewer |
+| 0.8.0   | nuevo plugin: browser-kit |
 
 ---
 
