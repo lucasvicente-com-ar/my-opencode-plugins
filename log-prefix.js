@@ -1,7 +1,5 @@
 // Credits: Lucas M. Vicente
 
-import { type Plugin } from "@opencode-ai/plugin"
-
 export const LogPrefixPlugin = async ({ $, directory }) => {
   return {
     "tool.execute.before": async (input, output) => {

@@ -1,7 +1,5 @@
 // Credits: Lucas M. Vicente
 
-import { type Plugin } from "@opencode-ai/plugin"
-
 const dangerousPatterns = [
   /rm\s+-rf\s+\//i,
   /rm\s+-rf\s+~[/\\]/i,
@@ -18,7 +16,7 @@ const dangerousPatterns = [
   /reg\s+delete/i,
 ]
 
-export const CommandGuardPlugin: Plugin = async ({ client }) => {
+export const CommandGuardPlugin = async ({ client }) => {
   return {
     "tool.execute.before": async (input, output) => {
       if (input.tool === "bash") {

@@ -1,7 +1,7 @@
 {
   "name": "my-opencode-plugins",
-  "version": "0.1.0",
-  "description": "Plugins para opencode - log-prefix y console-logger",
+  "version": "0.5.0",
+  "description": "Plugins para opencode - log-prefix, console-logger y command-guard",
   "author": "Lucas M. Vicente",
   "repository": "https://github.com/lucasvicente-com-ar/my-opencode-plugins",
   "opencode": {
@@ -10,13 +10,21 @@
   "plugins": [
     {
       "name": "log-prefix",
-      "description": "Agrega prefijo [OPENCODE] a cada comando bash",
-      "file": "log-prefix.js"
+      "description": "Agrega prefijo con timestamp a cada comando bash",
+      "file": "log-prefix.js",
+      "hook": "tool.execute.before"
     },
     {
       "name": "console-logger",
-      "description": "Guarda logs de cada comando bash ejecutado",
-      "file": "console-logger.ts"
+      "description": "Guarda logs de sesion con todos los comandos bash ejecutados",
+      "file": "console-logger.ts",
+      "hook": "tool.execute.after"
+    },
+    {
+      "name": "command-guard",
+      "description": "Bloquea comandos peligrosos antes de ejecutarse",
+      "file": "command-guard.js",
+      "hook": "tool.execute.before"
     }
   ]
 }
